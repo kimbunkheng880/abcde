@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BK Elite Jerseys - Products</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+    <h2>BK Elite Jerseys</h2>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="register.html">Register</a></li>
+    </ul>
+</nav>
+
+<h1 class="title">Our Products</h1>
+
+<!-- ================= CLUB JERSEYS ================= -->
+<h2 class="category">Club Jerseys ($12)</h2>
+
+<div class="card-container">
+
+    <div class="card">
+        <img src="images/real-madrid.jpg" alt="Real Madrid">
+        <h3>Real Madrid</h3>
+        <p>$12</p>
+        <button onclick="addToCart('Real Madrid', 12)">Add to Cart</button>
+    </div>
+
+    <div class="card">
+        <img src="images/barcelona.jpg" alt="Barcelona">
+        <h3>Barcelona</h3>
+        <p>$12</p>
+        <button onclick="addToCart('Barcelona', 12)">Add to Cart</button>
+    </div>
+
+    <div class="card">
+        <img src="images/arsenal.jpg" alt="Arsenal">
+        <h3>Arsenal</h3>
+        <p>$12</p>
+        <button onclick="addToCart('Arsenal', 12)">Add to Cart</button>
+    </div>
+
+    <div class="card">
+        <img src="images/liverpool.jpg" alt="Liverpool">
+        <h3>Liverpool</h3>
+        <p>$12</p>
+        <button onclick="addToCart('Liverpool', 12)">Add to Cart</button>
+    </div>
+
+</div>
+
+<!-- ================= NATIONAL TEAMS ================= -->
+<h2 class="category">National Teams ($15)</h2>
+
+<div class="card-container">
+
+    <div class="card">
+        <img src="images/argentina.jpg" alt="Argentina">
+        <h3>Argentina</h3>
+        <p>$15</p>
+        <button onclick="addToCart('Argentina', 15)">Add to Cart</button>
+    </div>
+
+    <div class="card">
+        <img src="images/brazil.jpg" alt="Brazil">
+        <h3>Brazil</h3>
+        <p>$15</p>
+        <button onclick="addToCart('Brazil', 15)">Add to Cart</button>
+    </div>
+
+    <div class="card">
+        <img src="images/france.jpg" alt="France">
+        <h3>France</h3>
+        <p>$15</p>
+        <button onclick="addToCart('France', 15)">Add to Cart</button>
+    </div>
+
+</div>
+
+<!-- ================= RETRO JERSEYS ================= -->
+<h2 class="category">Retro Jerseys ($18)</h2>
+
+<div class="card-container">
+
+    <div class="card">
+        <img src="images/man-united-1999.jpg" alt="Man United 1999">
+        <h3>Man United 1999</h3>
+        <p>$18</p>
+        <button onclick="addToCart('Man United 1999', 18)">Add to Cart</button>
+    </div>
+
+    <div class="card">
+        <img src="images/barcelona-2009.jpg" alt="Barcelona 2009">
+        <h3>Barcelona 2009</h3>
+        <p>$18</p>
+        <button onclick="addToCart('Barcelona 2009', 18)">Add to Cart</button>
+    </div>
+
+</div>
+
+<!-- ================= CART ================= -->
+<h2 class="title">🛒 Cart</h2>
+<ul id="cart"></ul>
+<h3 style="text-align:center;">Total: $<span id="total">0</span></h3>
+
+<!-- ================= PAYMENT ================= -->
+<h2 class="title">💳 Payment</h2>
+
+<button onclick="pay('ABA Bank')">ABA Bank</button>
+<button onclick="pay('ACLEDA Bank')">ACLEDA Bank</button>
+<button onclick="pay('Wing Bank')">Wing Bank</button>
+
+<!-- ================= QR BOX ================= -->
+<div id="qrBox" class="qr-box">
+    <h2>Scan to Pay</h2>
+    <img id="qrImage" width="200">
+    <p id="qrText"></p>
+    <button onclick="closeQR()">Close</button>
+</div>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+
+let cart = [];
+let total = 0;
+
+function addToCart(name, price){
+    cart.push({name, price});
+    total += price;
+    updateCart();
+}
+
+function updateCart(){
+    let list = document.getElementById("cart");
+    list.innerHTML = "";
+
+    cart.forEach(item => {
+        let li = document.createElement("li");
+        li.textContent = item.name + " - $" + item.price;
+        list.appendChild(li);
+    });
+
+    document.getElementById("total").textContent = total;
+}
+
+function pay(bank){
+    if(cart.length === 0){
+        alert("Cart is empty!");
+        return;
+    }
+
+    let text = bank + " Payment: $" + total;
+
+    let qr = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data="
+             + encodeURIComponent(text);
+
+    document.getElementById("qrImage").src = qr;
+    document.getElementById("qrText").textContent = text;
+    document.getElementById("qrBox").style.display = "block";
+}
+
+function closeQR(){
+    document.getElementById("qrBox").style.display = "none";
+}
+
+</script>
+
+</body>
+</html>
